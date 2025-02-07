@@ -3,18 +3,18 @@ import { NextResponse } from "next/server"
 const links = [
   {
     id: 0,
-    web3: "https://example.com/web3/post-0",
-    documentation: "https://docs.example.com/post-0",
+    web3: "https://mirror.xyz/0x14995Acf9Dba6F5922e2847E86Eb94BD92D443Ac/cWum054tfGWf-fduOn0tXO3lFkR-BAbN97UgStv4QgY",
+    documentation: "https://docs.google.com/document/d/e/2PACX-1vR6Qpk739U6vYvQ3N9hHakMw-7Ldx5P2mKEU0JjyBat3N8J3GfMSY49a7qr-xb8Tb8h3NQ2ZHBTWxiS/pub",
   },
   {
     id: 1,
-    web3: "https://example.com/web3/post-1",
-    documentation: "https://docs.example.com/post-1",
+    web3: "coming soon!",
+    documentation: "coming soon!",
   },
   {
     id: 2,
-    web3: "https://example.com/web3/post-2",
-    documentation: "https://docs.example.com/post-2",
+    web3: "coming soon!",
+    documentation: "coming soon!",
   },
 ]
 
