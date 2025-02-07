@@ -2,49 +2,65 @@
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { useState } from "react"
+import { ExternalLink } from "lucide-react"
 
 interface WriteupProps {
   id: number
+  title: string
+  web3Link?: string
+  docsLink?: string
 }
 
-export default function Writeup({ id }: WriteupProps) {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"
-  const [showWeb3, setShowWeb3] = useState(false)
-  const [showDocs, setShowDocs] = useState(false)
+export default function Writeup({ title, web3Link, docsLink }: WriteupProps) {
+  const isComingSoon = !web3Link && !docsLink
 
   return (
-    <Card className="mb-6 shadow-md dark:bg-gray-800">
+    <Card className="mb-6 shadow-md dark:bg-gray-800 overflow-hidden">
       <CardHeader className="bg-gray-100 dark:bg-gray-700">
-        <CardTitle className="text-2xl">Writeup {id}</CardTitle>
+        <CardTitle className="text-2xl">{title}</CardTitle>
       </CardHeader>
       <CardContent className="mt-4 space-y-4">
-        <div>
-          <h3 className="text-lg font-semibold mb-2">Web 3 Link</h3>
-          <Button onClick={() => setShowWeb3(!showWeb3)} variant="outline">
-            {showWeb3 ? "Hide API Call" : "Show API Call"}
-          </Button>
-          {showWeb3 && (
-            <pre className="bg-gray-100 dark:bg-gray-700 p-4 rounded-md overflow-x-auto text-sm mt-2">
-              <code>
-                curl -X GET &quot;{apiUrl}/api/links?id={id}&type=web3&quot;
-              </code>
-            </pre>
-          )}
-        </div>
-        <div>
-          <h3 className="text-lg font-semibold mb-2">Documentation Link</h3>
-          <Button onClick={() => setShowDocs(!showDocs)} variant="outline">
-            {showDocs ? "Hide API Call" : "Show API Call"}
-          </Button>
-          {showDocs && (
-            <pre className="bg-gray-100 dark:bg-gray-700 p-4 rounded-md overflow-x-auto text-sm mt-2">
-              <code>
-                curl -X GET &quot;{apiUrl}/api/links?id={id}&type=documentation&quot;
-              </code>
-            </pre>
-          )}
-        </div>
+        {isComingSoon ? (
+          <div className="text-center py-8">
+            <h3 className="text-2xl font-semibold text-gray-500 dark:text-gray-400">Coming Soon</h3>
+            <p className="mt-2 text-gray-400 dark:text-gray-500">We're working on something exciting. Stay tuned!</p>
+          </div>
+        ) : (
+          <>
+            {web3Link && (
+              <div>
+                <h3 className="text-lg font-semibold mb-2">Web 3 Link</h3>
+                <Button asChild variant="outline" className="w-full">
+                  <a
+                    href={web3Link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center"
+                  >
+                    Open Web 3 Link
+                    <ExternalLink className="ml-2 h-4 w-4" />
+                  </a>
+                </Button>
+              </div>
+            )}
+            {docsLink && (
+              <div>
+                <h3 className="text-lg font-semibold mb-2">Documentation Link</h3>
+                <Button asChild variant="outline" className="w-full">
+                  <a
+                    href={docsLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center"
+                  >
+                    Open Documentation
+                    <ExternalLink className="ml-2 h-4 w-4" />
+                  </a>
+                </Button>
+              </div>
+            )}
+          </>
+        )}
       </CardContent>
     </Card>
   )
