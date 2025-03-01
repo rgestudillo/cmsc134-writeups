@@ -13,7 +13,12 @@ export default function Home() {
           web3Link="https://mirror.xyz/0x14995Acf9Dba6F5922e2847E86Eb94BD92D443Ac/cWum054tfGWf-fduOn0tXO3lFkR-BAbN97UgStv4QgY"
           docsLink="https://docs.google.com/document/d/e/2PACX-1vR6Qpk739U6vYvQ3N9hHakMw-7Ldx5P2mKEU0JjyBat3N8J3GfMSY49a7qr-xb8Tb8h3NQ2ZHBTWxiS/pub"
         />
-        <Writeup id={1} title="Write-up 1" />
+        <Writeup
+          id={1}
+          title="MP #1 Documentation"
+          web3Link="https://mirror.xyz/0x14995Acf9Dba6F5922e2847E86Eb94BD92D443Ac/yQ5HdC271Grfazn2JNakgGsUGAfim1QBh0LAwMAS4Ow"
+          docsLink="https://docs.google.com/document/d/e/2PACX-1vQwy44erukRyzDByN-UIjjQ46OvhRvFDJ8V0jkrxddO8P9HsaRQtyVJ8t_I-YwDTNw62exVRcOjZ_AE/pub"
+        />
         <Writeup id={2} title="Write-up 2" />
       </div>
     </div>
