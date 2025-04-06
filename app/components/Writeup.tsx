@@ -9,9 +9,21 @@ interface WriteupProps {
   title: string
   web3Link?: string
   docsLink?: string
+  web3ButtonTitle?: string
+  docsButtonTitle?: string
+  web3SectionTitle?: string
+  docsSectionTitle?: string
 }
 
-export default function Writeup({ title, web3Link, docsLink }: WriteupProps) {
+export default function Writeup({
+  title,
+  web3Link,
+  docsLink,
+  web3ButtonTitle = "View",
+  docsButtonTitle = "View",
+  web3SectionTitle = "Web 3 Link",
+  docsSectionTitle = "Documentation Link"
+}: WriteupProps) {
   const isComingSoon = !web3Link && !docsLink
 
   return (
@@ -29,7 +41,7 @@ export default function Writeup({ title, web3Link, docsLink }: WriteupProps) {
           <>
             {web3Link && (
               <div>
-                <h3 className="text-lg font-semibold mb-2">Web 3 Link</h3>
+                <h3 className="text-lg font-semibold mb-2">{web3SectionTitle}</h3>
                 <Button asChild variant="outline" className="w-full">
                   <a
                     href={web3Link}
@@ -37,7 +49,7 @@ export default function Writeup({ title, web3Link, docsLink }: WriteupProps) {
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center"
                   >
-                    Open Web 3 Link
+                    {web3ButtonTitle}
                     <ExternalLink className="ml-2 h-4 w-4" />
                   </a>
                 </Button>
@@ -45,7 +57,7 @@ export default function Writeup({ title, web3Link, docsLink }: WriteupProps) {
             )}
             {docsLink && (
               <div>
-                <h3 className="text-lg font-semibold mb-2">Documentation Link</h3>
+                <h3 className="text-lg font-semibold mb-2">{docsSectionTitle}</h3>
                 <Button asChild variant="outline" className="w-full">
                   <a
                     href={docsLink}
@@ -53,7 +65,7 @@ export default function Writeup({ title, web3Link, docsLink }: WriteupProps) {
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center"
                   >
-                    Open Documentation
+                    {docsButtonTitle}
                     <ExternalLink className="ml-2 h-4 w-4" />
                   </a>
                 </Button>
