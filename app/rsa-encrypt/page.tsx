@@ -138,29 +138,29 @@ export default function RSAEncryptPage() {
     const encryptAndSign = async () => {
         if (!message) {
             setError("Please enter a message")
-            addLog("Encrypt and Sign", "Error: No message provided", "error")
+            addLog("Encrypt then Sign", "Error: No message provided", "error")
             return
         }
 
         if (!encryptionKeys || !signingKeys) {
             setError("Please generate keys first")
-            addLog("Encrypt and Sign", "Error: Keys not generated", "error")
+            addLog("Encrypt then Sign", "Error: Keys not generated", "error")
             return
         }
 
         if (message.length > 140) {
             setError("Message must not exceed 140 characters")
-            addLog("Encrypt and Sign", "Error: Message exceeds 140 characters", "error")
+            addLog("Encrypt then Sign", "Error: Message exceeds 140 characters", "error")
             return
         }
 
         try {
             setIsProcessing(true)
             setError(null)
-            addLog("Encrypt and Sign", `Starting encrypt-then-sign process for message: "${message.substring(0, 20)}${message.length > 20 ? '...' : ''}"`, "info")
+            addLog("Encrypt then Sign", `Starting encrypt-then-sign process for message: "${message.substring(0, 20)}${message.length > 20 ? '...' : ''}"`, "info")
 
             // Convert keys from JWK format
-            addLog("Encrypt and Sign", "Importing encryption public key from JWK format", "info")
+            addLog("Encrypt then Sign", "Importing encryption public key from JWK format", "info")
             const encryptionPublicKey = await window.crypto.subtle.importKey(
                 "jwk",
                 JSON.parse(encryptionKeys.publicKey),
@@ -172,7 +172,7 @@ export default function RSAEncryptPage() {
                 ["encrypt"]
             )
 
-            addLog("Encrypt and Sign", "Importing signing private key from JWK format", "info")
+            addLog("Encrypt then Sign", "Importing signing private key from JWK format", "info")
             const signingPrivateKey = await window.crypto.subtle.importKey(
                 "jwk",
                 JSON.parse(signingKeys.privateKey),
@@ -185,13 +185,13 @@ export default function RSAEncryptPage() {
             )
 
             // Convert message to ArrayBuffer
-            addLog("Encrypt and Sign", "Converting plaintext message to binary format (ArrayBuffer)", "info")
+            addLog("Encrypt then Sign", "Converting plaintext message to binary format (ArrayBuffer)", "info")
             const encoder = new TextEncoder()
             const messageBuffer = encoder.encode(message)
-            addLog("Encrypt and Sign", `Message encoded to ${messageBuffer.byteLength} bytes`, "info")
+            addLog("Encrypt then Sign", `Message encoded to ${messageBuffer.byteLength} bytes`, "info")
 
             // Encrypt the message with RSA-OAEP
-            addLog("Encrypt and Sign", "Encrypting message with RSA-OAEP", "info")
+            addLog("Encrypt then Sign", "Encrypting message with RSA-OAEP", "info")
             const encryptedBuffer = await window.crypto.subtle.encrypt(
                 {
                     name: "RSA-OAEP"
@@ -199,10 +199,10 @@ export default function RSAEncryptPage() {
                 encryptionPublicKey,
                 messageBuffer
             )
-            addLog("Encrypt and Sign", `Message encrypted successfully (${encryptedBuffer.byteLength} bytes)`, "success")
+            addLog("Encrypt then Sign", `Message encrypted successfully (${encryptedBuffer.byteLength} bytes)`, "success")
 
             // Convert encrypted data to base64 for display
-            addLog("Encrypt and Sign", "Converting encrypted data to base64 format", "info")
+            addLog("Encrypt then Sign", "Converting encrypted data to base64 format", "info")
             const encryptedArray = new Uint8Array(encryptedBuffer)
             let binaryString = '';
             for (let i = 0; i < encryptedArray.length; i++) {
@@ -210,10 +210,10 @@ export default function RSAEncryptPage() {
             }
             const encryptedBase64 = btoa(binaryString)
             setEncryptedMessage(encryptedBase64)
-            addLog("Encrypt and Sign", `Base64 encoding complete (${encryptedBase64.length} characters)`, "info")
+            addLog("Encrypt then Sign", `Base64 encoding complete (${encryptedBase64.length} characters)`, "info")
 
             // Sign the encrypted message
-            addLog("Encrypt and Sign", "Signing the encrypted data with RSA-PSS", "info")
+            addLog("Encrypt then Sign", "Signing the encrypted data with RSA-PSS", "info")
             const signature = await window.crypto.subtle.sign(
                 {
                     name: "RSA-PSS",
@@ -222,10 +222,10 @@ export default function RSAEncryptPage() {
                 signingPrivateKey,
                 encryptedBuffer
             )
-            addLog("Encrypt and Sign", `Message signed successfully (${signature.byteLength} bytes)`, "success")
+            addLog("Encrypt then Sign", `Message signed successfully (${signature.byteLength} bytes)`, "success")
 
             // Convert signature to base64 for display
-            addLog("Encrypt and Sign", "Converting signature to base64 format", "info")
+            addLog("Encrypt then Sign", "Converting signature to base64 format", "info")
             const signatureArray = new Uint8Array(signature)
             let sigBinaryString = '';
             for (let i = 0; i < signatureArray.length; i++) {
@@ -233,15 +233,15 @@ export default function RSAEncryptPage() {
             }
             const signatureBase64 = btoa(sigBinaryString)
             setSignature(signatureBase64)
-            addLog("Encrypt and Sign", `Base64 encoding complete (${signatureBase64.length} characters)`, "info")
+            addLog("Encrypt then Sign", `Base64 encoding complete (${signatureBase64.length} characters)`, "info")
 
             setDecryptedMessage("")
             setVerificationResult(null)
-            addLog("Encrypt and Sign", "Encrypt-then-sign process completed", "success")
+            addLog("Encrypt then Sign", "Encrypt-then-sign process completed", "success")
         } catch (err) {
             console.error("Error encrypting and signing:", err)
             setError("Failed to encrypt and sign. See console for details.")
-            addLog("Encrypt and Sign", `Error: ${err instanceof Error ? err.message : String(err)}`, "error")
+            addLog("Encrypt then Sign", `Error: ${err instanceof Error ? err.message : String(err)}`, "error")
         } finally {
             setIsProcessing(false)
         }
@@ -251,29 +251,29 @@ export default function RSAEncryptPage() {
     const verifyAndDecrypt = async () => {
         if ((!encryptedMessage || !signature) && (!inputEncryptedMessage || !inputSignature)) {
             setError("Please provide encrypted message and signature")
-            addLog("Verify and Decrypt", "Error: Missing encrypted message or signature", "error")
+            addLog("Verify then Decrypt", "Error: Missing encrypted message or signature", "error")
             return
         }
 
         if (!encryptionKeys || !signingKeys) {
             setError("Please generate keys first")
-            addLog("Verify and Decrypt", "Error: Keys not generated", "error")
+            addLog("Verify then Decrypt", "Error: Keys not generated", "error")
             return
         }
 
         try {
             setIsProcessing(true)
             setError(null)
-            addLog("Verify and Decrypt", "Starting verify-then-decrypt process", "info")
+            addLog("Verify then Decrypt", "Starting verify-then-decrypt process", "info")
 
             // Use input values if provided, otherwise use state values
             const encryptedToVerify = inputEncryptedMessage || encryptedMessage
             const signatureToVerify = inputSignature || signature
-            addLog("Verify and Decrypt", `Using ${inputEncryptedMessage ? 'manually entered' : 'generated'} encrypted message`, "info")
-            addLog("Verify and Decrypt", `Using ${inputSignature ? 'manually entered' : 'generated'} signature`, "info")
+            addLog("Verify then Decrypt", `Using ${inputEncryptedMessage ? 'manually entered' : 'generated'} encrypted message`, "info")
+            addLog("Verify then Decrypt", `Using ${inputSignature ? 'manually entered' : 'generated'} signature`, "info")
 
             // Convert keys from JWK format
-            addLog("Verify and Decrypt", "Importing encryption private key from JWK format", "info")
+            addLog("Verify then Decrypt", "Importing encryption private key from JWK format", "info")
             const encryptionPrivateKey = await window.crypto.subtle.importKey(
                 "jwk",
                 JSON.parse(encryptionKeys.privateKey),
@@ -285,7 +285,7 @@ export default function RSAEncryptPage() {
                 ["decrypt"]
             )
 
-            addLog("Verify and Decrypt", "Importing signing public key from JWK format", "info")
+            addLog("Verify then Decrypt", "Importing signing public key from JWK format", "info")
             const signingPublicKey = await window.crypto.subtle.importKey(
                 "jwk",
                 JSON.parse(signingKeys.publicKey),
@@ -298,18 +298,18 @@ export default function RSAEncryptPage() {
             )
 
             // Convert base64 back to ArrayBuffer
-            addLog("Verify and Decrypt", "Converting base64 encrypted message to binary format", "info")
+            addLog("Verify then Decrypt", "Converting base64 encrypted message to binary format", "info")
             const encryptedBytes = new Uint8Array(atob(encryptedToVerify).split('').map(c => c.charCodeAt(0)))
             const encryptedBuffer = encryptedBytes.buffer
-            addLog("Verify and Decrypt", `Encrypted data decoded (${encryptedBuffer.byteLength} bytes)`, "info")
+            addLog("Verify then Decrypt", `Encrypted data decoded (${encryptedBuffer.byteLength} bytes)`, "info")
 
-            addLog("Verify and Decrypt", "Converting base64 signature to binary format", "info")
+            addLog("Verify then Decrypt", "Converting base64 signature to binary format", "info")
             const signatureBytes = new Uint8Array(atob(signatureToVerify).split('').map(c => c.charCodeAt(0)))
             const signatureBuffer = signatureBytes.buffer
-            addLog("Verify and Decrypt", `Signature decoded (${signatureBuffer.byteLength} bytes)`, "info")
+            addLog("Verify then Decrypt", `Signature decoded (${signatureBuffer.byteLength} bytes)`, "info")
 
             // Verify the signature
-            addLog("Verify and Decrypt", "Verifying signature with RSA-PSS", "info")
+            addLog("Verify then Decrypt", "Verifying signature with RSA-PSS", "info")
             const isValid = await window.crypto.subtle.verify(
                 {
                     name: "RSA-PSS",
@@ -323,10 +323,10 @@ export default function RSAEncryptPage() {
             setVerificationResult(isValid)
 
             if (isValid) {
-                addLog("Verify and Decrypt", "Signature verification successful", "success")
+                addLog("Verify then Decrypt", "Signature verification successful", "success")
 
                 // Decrypt the message
-                addLog("Verify and Decrypt", "Decrypting message with RSA-OAEP", "info")
+                addLog("Verify then Decrypt", "Decrypting message with RSA-OAEP", "info")
                 const decryptedBuffer = await window.crypto.subtle.decrypt(
                     {
                         name: "RSA-OAEP"
@@ -336,20 +336,20 @@ export default function RSAEncryptPage() {
                 )
 
                 // Convert decrypted data to string
-                addLog("Verify and Decrypt", "Converting decrypted data to text", "info")
+                addLog("Verify then Decrypt", "Converting decrypted data to text", "info")
                 const decoder = new TextDecoder()
                 const decryptedText = decoder.decode(decryptedBuffer)
                 setDecryptedMessage(decryptedText)
-                addLog("Verify and Decrypt", `Message decrypted successfully: "${decryptedText.substring(0, 20)}${decryptedText.length > 20 ? '...' : ''}"`, "success")
+                addLog("Verify then Decrypt", `Message decrypted successfully: "${decryptedText.substring(0, 20)}${decryptedText.length > 20 ? '...' : ''}"`, "success")
             } else {
                 setDecryptedMessage("")
                 setError("Signature verification failed")
-                addLog("Verify and Decrypt", "Signature verification failed - cannot decrypt message", "error")
+                addLog("Verify then Decrypt", "Signature verification failed - cannot decrypt message", "error")
             }
         } catch (err) {
             console.error("Error verifying and decrypting:", err)
             setError("Failed to verify and decrypt. See console for details.")
-            addLog("Verify and Decrypt", `Error: ${err instanceof Error ? err.message : String(err)}`, "error")
+            addLog("Verify then Decrypt", `Error: ${err instanceof Error ? err.message : String(err)}`, "error")
             setVerificationResult(false)
             setDecryptedMessage("")
         } finally {
@@ -779,7 +779,7 @@ export default function RSAEncryptPage() {
                     <CardHeader className="bg-gray-50 dark:bg-gray-800/50 border-b pb-3">
                         <CardTitle className="flex items-center text-xl">
                             <Lock className="mr-2 h-5 w-5" />
-                            Encrypt and Sign
+                            Encrypt then Sign
                         </CardTitle>
                         <CardDescription>
                             Enter a message (max 140 characters) to encrypt and sign
@@ -816,7 +816,7 @@ export default function RSAEncryptPage() {
                                         Processing...
                                     </>
                                 ) : (
-                                    <>Encrypt and Sign</>
+                                    <>Encrypt then Sign</>
                                 )}
                             </Button>
                         </div>
@@ -885,7 +885,7 @@ export default function RSAEncryptPage() {
                     <CardHeader className="bg-gray-50 dark:bg-gray-800/50 border-b pb-3">
                         <CardTitle className="flex items-center text-xl">
                             <Unlock className="mr-2 h-5 w-5" />
-                            Verify and Decrypt
+                            Verify then Decrypt
                         </CardTitle>
                         <CardDescription>
                             Verify the signature and decrypt the message
@@ -943,7 +943,7 @@ export default function RSAEncryptPage() {
                                             Processing...
                                         </>
                                     ) : (
-                                        <>Verify and Decrypt</>
+                                        <>Verify then Decrypt</>
                                     )}
                                 </Button>
                             </div>
