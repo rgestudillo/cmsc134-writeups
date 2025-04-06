@@ -19,7 +19,11 @@ export default function Home() {
           web3Link="https://mirror.xyz/0x14995Acf9Dba6F5922e2847E86Eb94BD92D443Ac/yQ5HdC271Grfazn2JNakgGsUGAfim1QBh0LAwMAS4Ow"
           docsLink="https://docs.google.com/document/d/e/2PACX-1vQwy44erukRyzDByN-UIjjQ46OvhRvFDJ8V0jkrxddO8P9HsaRQtyVJ8t_I-YwDTNw62exVRcOjZ_AE/pub"
         />
-        <Writeup id={2} title="Write-up 2" />
+        <Writeup
+          id={2}
+          title="RSA-OAEP Encryption with Authentication"
+          web3Link="/rsa-encrypt"
+        />
       </div>
     </div>
   )
