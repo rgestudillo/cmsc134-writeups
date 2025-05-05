@@ -37,6 +37,16 @@ export default function Home() {
           web3SectionTitle="Writeup"
           docsSectionTitle="Interactive Demo"
         />
+        <Writeup
+          id={3}
+          title="MP #3 Documentation"
+          web3Link="https://mirror.xyz/0x14995Acf9Dba6F5922e2847E86Eb94BD92D443Ac/VMolyRgdB39gpUOscMPcd8qxmaEHcROjwoEmvCF3uNQ"
+          docsLink="https://drive.google.com/drive/folders/1UUu6SKhpmg_hp5vWdf1hNLD24uK-HTRt?fbclid=IwZXh0bgNhZW0CMTEAAR5n5iMnDzI5krFGFcsUz6eejDVq0izn_fN0qWfZCu2T2bEGETgMPRh5Zgtfgw_aem_ngbDqi49RJHg3HtSFyeHig"
+          web3ButtonTitle="View Writeup"
+          docsButtonTitle="View Source Code"
+          web3SectionTitle="Writeup"
+          docsSectionTitle="Source Code"
+        />
       </div>
     </div>
   )
