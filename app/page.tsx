@@ -47,6 +47,16 @@ export default function Home() {
           web3SectionTitle="Writeup"
           docsSectionTitle="Source Code"
         />
+        <Writeup
+          id={4}
+          title="Writeup 1: Tor-rific or Tor-rible?"
+          web3Link="https://mirror.xyz/0x14995Acf9Dba6F5922e2847E86Eb94BD92D443Ac/oCvTCqmR4br8Ie40bGLBFcob2HhsM_ihUEYtcfHAUdk"
+          docsLink="https://docs.google.com/document/d/e/2PACX-1vRYLm1Xdlfs-CPzPktnhIjsGOl7W3xIeGvAdXchY-N7HSXiJRHTyO1g8T5ZvMtPdeU_bLAaSidOgEAj/pub"
+          web3ButtonTitle="View Writeup"
+          docsButtonTitle="View Documentation"
+          web3SectionTitle="Writeup"
+          docsSectionTitle="Documentation"
+        />
       </div>
     </div>
   )
